@@ -164,6 +164,6 @@
     <AndroidResource Include="Resources\user.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\pedido.png" />
+    <AndroidResource Include="Resources\pedido.png" />
   </ItemGroup>
 </Project>

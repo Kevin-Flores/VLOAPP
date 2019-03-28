@@ -15,6 +15,15 @@ namespace AppVLO
         public Inicio()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
+            NavigationPage.SetHasBackButton(this, false);
+            
         }
-	}
+
+        protected override bool OnBackButtonPressed()
+        {
+            base.OnBackButtonPressed();
+            return true;
+        }
+    }
 }

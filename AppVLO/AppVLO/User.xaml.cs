@@ -22,6 +22,12 @@ namespace AppVLO
 
         }
 
+        //protected override bool OnBackButtonPressed()
+        //{
+        //    base.OnBackButtonPressed();
+        //    return true;
+        //}
+
         protected async override void OnAppearing()
         {
             base.OnAppearing();

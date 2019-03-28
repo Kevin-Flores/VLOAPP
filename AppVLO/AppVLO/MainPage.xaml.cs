@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using AppVLO.Model;
+using Xamarin.Forms.PlatformConfiguration;
+using System.Threading;
 
 namespace AppVLO
 {
@@ -16,6 +18,16 @@ namespace AppVLO
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+            NavigationPage.SetHasBackButton(this, false);
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            base.OnBackButtonPressed();
+
+            Application.Current.Quit();
+            //Thread.CurrentThread.Abort();
+            return false;
         }
 
         private async void BtnIngresar_Clicked(object sender, EventArgs e)

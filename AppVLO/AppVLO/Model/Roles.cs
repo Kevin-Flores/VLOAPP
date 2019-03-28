@@ -12,6 +12,6 @@ namespace AppVLO.Model
 
 
         //Relaciones
-        public virtual List<Usuarios> Usuarios { get; set; }
+        //public virtual List<Usuarios> Usuarios { get; set; }
     }
 }
