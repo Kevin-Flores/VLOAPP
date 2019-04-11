@@ -26,8 +26,10 @@ namespace AppVLO
             string result;
             try
             {
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(VarGlobal.Link);
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(VarGlobal.Link)
+                };
                 string url = string.Format("api/Mesas");
                 var response = await client.GetAsync(url);
                 result = response.Content.ReadAsStringAsync().Result;
@@ -45,5 +47,13 @@ namespace AppVLO
 
         }
 
+        private async void ListMesas_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            MesasD _Data = e.SelectedItem as MesasD;
+            if (_Data != null)
+            {
+                await Navigation.PushAsync(new NavigationPage(new Menus { BindingContext = _Data }));
+            }
+        }
     }
 }

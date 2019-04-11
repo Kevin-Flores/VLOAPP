@@ -49,8 +49,10 @@ namespace AppVLO
             try
             {
                 btnIngresar.IsEnabled = false;
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(VarGlobal.Link);
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(VarGlobal.Link)
+                };
                 string url = string.Format("api/Usuarios/{0}/{1}", txtUser.Text, txtPassword.Text);
                 var response = await client.GetAsync(url);
                 result = response.Content.ReadAsStringAsync().Result;
@@ -76,7 +78,7 @@ namespace AppVLO
             }
             var Usuarios = JsonConvert.DeserializeObject<Usuarios>(result);
             VarGlobal.Global = Usuarios.IdUser.ToString();
-            await Navigation.PushModalAsync(new Inicio());
+            await Navigation.PushModalAsync(new NavigationPage(new Inicio()));
         }
     }
 }

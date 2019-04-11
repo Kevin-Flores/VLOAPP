@@ -3,10 +3,53 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppVLO.Menus">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
+        <StackLayout Orientation="Horizontal">
+
+            
+            
+            <StackLayout Padding="10,30,10,10" Spacing="10">
+
+                <Label x:Name="lblOrdenes" Text="Orden Mesa"  FontSize="20" HorizontalOptions="Center" 
+                   VerticalOptions="Center" Margin="20"/>
+
+                <Label Text="Cliente:"
+                VerticalOptions="Center"  FontSize="20"
                 HorizontalOptions="CenterAndExpand" />
+
+                <Entry x:Name="txtCliente" Placeholder="Nombre del cliente"
+                VerticalOptions="Center"  FontSize="20"
+                HorizontalOptions="CenterAndExpand" />
+
+                <Label Text="Numero Personas:"
+                VerticalOptions="Center"  FontSize="20"
+                HorizontalOptions="CenterAndExpand" />
+
+                <Entry x:Name="txtPersonas" Placeholder="Numero de personass"
+                VerticalOptions="Center"  FontSize="20"
+                HorizontalOptions="CenterAndExpand" />
+
+            </StackLayout>
+            <StackLayout Padding="10,30,10,10" Spacing="10">
+                <Label Text="Menus"  FontSize="30" HorizontalOptions="Center" 
+                   VerticalOptions="Center" Margin="20"/>
+                
+                <ListView x:Name="listMesas" SeparatorVisibility="None" HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate >
+                            <ViewCell>
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding Nombre}" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
+                           VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+                           TextColor="Black"/>
+                                    <Label Text="{Binding Precio}" VerticalOptions="CenterAndExpand" HorizontalOptions="End"
+                           VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+                           TextColor="Black"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

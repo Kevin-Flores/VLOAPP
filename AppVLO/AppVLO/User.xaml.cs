@@ -38,8 +38,10 @@ namespace AppVLO
             string result;
             try
             {
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(VarGlobal.Link);
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(VarGlobal.Link)
+                };
                 string url = string.Format("api/Usuarios/{0}", VarGlobal.Global);
                 var response = await client.GetAsync(url);
                 result = response.Content.ReadAsStringAsync().Result;
@@ -58,8 +60,10 @@ namespace AppVLO
             string result2;
             try
             {
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(VarGlobal.Link);
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(VarGlobal.Link)
+                };
                 string url = string.Format("api/Roles/{0}", Usuarios.IdRol.ToString());
                 var response = await client.GetAsync(url);
                 result2 = response.Content.ReadAsStringAsync().Result;
