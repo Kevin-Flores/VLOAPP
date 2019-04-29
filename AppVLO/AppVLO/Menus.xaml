@@ -30,18 +30,15 @@
 
             </StackLayout>
             <StackLayout Padding="10,30,10,10" Spacing="10">
-                <Label Text="Menus"  FontSize="30" HorizontalOptions="Center" 
+                <Label Text="Tipo de Menu"  FontSize="30" HorizontalOptions="Center" 
                    VerticalOptions="Center" Margin="20"/>
                 
-                <ListView x:Name="listMesas" SeparatorVisibility="None" HasUnevenRows="True">
+                <ListView x:Name="listMesas" SeparatorVisibility="None" HasUnevenRows="True" ItemSelected="ListMesas_ItemSelected">
                     <ListView.ItemTemplate>
                         <DataTemplate >
                             <ViewCell>
-                                <StackLayout Orientation="Vertical">
-                                    <Label Text="{Binding Nombre}" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
-                           VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
-                           TextColor="Black"/>
-                                    <Label Text="{Binding Precio}" VerticalOptions="CenterAndExpand" HorizontalOptions="End"
+                                <StackLayout BackgroundColor="OrangeRed" Margin="10" Padding="10">
+                                    <Label Text="{Binding Nombre}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"
                            VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
                            TextColor="Black"/>
                                 </StackLayout>

@@ -28,7 +28,7 @@ namespace AppVLO
                 {
                     BaseAddress = new Uri(VarGlobal.Link)
                 };
-                string url = string.Format("api/Menus");
+                string url = string.Format("api/TipoMenus");
                 var response = await client.GetAsync(url);
                 result = response.Content.ReadAsStringAsync().Result;
 
@@ -39,9 +39,17 @@ namespace AppVLO
                 return;
             }
 
-            List<Model.Menu> menu = JsonConvert.DeserializeObject<List<Model.Menu>>(result);
+            List<Model.TipoMenu> TipoMenu = JsonConvert.DeserializeObject<List<Model.TipoMenu>>(result);
 
-            listMesas.ItemsSource = menu;
+            listMesas.ItemsSource = TipoMenu;
+        }
+
+        private async void ListMesas_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem is TipoMenu _Data)
+            {
+                await Navigation.PushAsync(new OpcionMenu { BindingContext = _Data });
+            }
         }
     }
 }

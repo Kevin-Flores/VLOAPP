@@ -1,21 +1,20 @@
-﻿using AppVLO.Model;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
+using AppVLO.Model;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace AppVLO
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Mesas : ContentPage
+	public partial class OpcionMenu : ContentPage
 	{
-		public Mesas ()
+		public OpcionMenu ()
 		{
 			InitializeComponent ();
 		}
@@ -30,7 +29,7 @@ namespace AppVLO
                 {
                     BaseAddress = new Uri(VarGlobal.Link)
                 };
-                string url = string.Format("api/Mesas");
+                string url = string.Format("api/Menus/{0}", ((TipoMenu)BindingContext).IdTipoMenu);
                 var response = await client.GetAsync(url);
                 result = response.Content.ReadAsStringAsync().Result;
 
@@ -41,18 +40,9 @@ namespace AppVLO
                 return;
             }
 
-            List<MesasD> mesas = JsonConvert.DeserializeObject<List<MesasD>>(result);
-            
-            listMesas.ItemsSource = mesas;
+            List<Model.Menu> menu = JsonConvert.DeserializeObject<List<Model.Menu>>(result);
 
-        }
-
-        private async void ListMesas_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem is MesasD _Data)
-            {
-                await Navigation.PushAsync(new Menus { BindingContext = _Data });
-            }
+            listOMenus.ItemsSource = menu;
         }
     }
 }
