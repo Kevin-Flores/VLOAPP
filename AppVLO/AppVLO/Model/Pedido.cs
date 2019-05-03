@@ -20,6 +20,6 @@ namespace AppVLO.Model
         public int IdMesa { get; set; }
 
         //Empleado
-        public int IdEmpleado { get; set; }
+        public int IdUser { get; set; }
     }
 }

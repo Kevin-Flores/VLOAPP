@@ -27,6 +27,22 @@
                 <Entry x:Name="txtPersonas" Placeholder="Numero de personass"
                 VerticalOptions="Center"  FontSize="20"
                 HorizontalOptions="CenterAndExpand" />
+                
+                <Button Text="Ocupar Mesa" x:Name="OcuparMesa" Clicked="OcuparMesa_Clicked"
+                        VerticalOptions="Center"  FontSize="20"
+                HorizontalOptions="CenterAndExpand" />
+
+                <Button Text="Cancelar" x:Name="Cancelar" Clicked="Cancelar_Clicked"
+                        VerticalOptions="Center"  FontSize="20"
+                HorizontalOptions="CenterAndExpand" />
+
+                <Button Text="Ver Detalle" x:Name="VerDetalle" Clicked="VerDetalle_Clicked"
+                        VerticalOptions="Center"  FontSize="20"
+                HorizontalOptions="CenterAndExpand" />
+
+                <Label Text="TotalPagar" x:Name="TotalPagar" 
+                VerticalOptions="Center"  FontSize="20"
+                HorizontalOptions="CenterAndExpand" />
 
             </StackLayout>
             <StackLayout Padding="10,30,10,10" Spacing="10">

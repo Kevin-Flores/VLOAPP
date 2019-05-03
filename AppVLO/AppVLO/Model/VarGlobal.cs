@@ -7,6 +7,6 @@ namespace AppVLO.Model
     public class VarGlobal
     {
         public static string Global;
-        public static string Link = "http://192.168.0.111:45455/";
+        public static string Link = "http://192.168.137.70:45455/";
     }
 }
