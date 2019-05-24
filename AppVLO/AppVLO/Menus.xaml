@@ -49,7 +49,7 @@
                 <Label Text="Tipo de Menu"  FontSize="30" HorizontalOptions="Center" 
                    VerticalOptions="Center" Margin="20"/>
                 
-                <ListView x:Name="listMesas" SeparatorVisibility="None" HasUnevenRows="True" ItemSelected="ListMesas_ItemSelected">
+                <ListView x:Name="listMesas" SeparatorVisibility="None" HasUnevenRows="True" ItemSelected="ListMesas_ItemSelected" >
                     <ListView.ItemTemplate>
                         <DataTemplate >
                             <ViewCell>
