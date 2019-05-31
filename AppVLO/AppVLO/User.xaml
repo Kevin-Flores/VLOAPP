@@ -3,7 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppVLO.User"
             Icon="user.png">
-    <ContentPage.Content>
+    
+    <StackLayout>
+    <StackLayout BackgroundColor="#0B5894" Padding="0,20,0,20">
+
+        <Label Text="PERFIL DE USUARIO" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+    </StackLayout>
+
+        <Grid Padding="10,10,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+            <Label Text="NOMBRE COMPLETO" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="20" Grid.Row="0" Grid.Column="0" HorizontalTextAlignment="Start" Grid.ColumnSpan="4"/>
+            <Label x:Name="lblNombre" Text="" VerticalOptions="Center" TextColor="Black" FontSize="20" Grid.Row="1" Grid.Column="1" HorizontalTextAlignment="Start" Grid.ColumnSpan="3"/>
+
+            <Label Text="ID USUARIO" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="20" Grid.Row="2" Grid.Column="0" HorizontalTextAlignment="Start" Grid.ColumnSpan="4"/>
+            <Label x:Name="lblUser" Text="" VerticalOptions="Center" TextColor="Black" FontSize="20" Grid.Row="3" Grid.Column="1" HorizontalTextAlignment="Start" Grid.ColumnSpan="3"/>
+
+            <Label Text="ROL DE USUARIO" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="20" Grid.Row="4" Grid.Column="0" HorizontalTextAlignment="Start" Grid.ColumnSpan="4"/>
+            <Label x:Name="lblRol" Text="" VerticalOptions="Center" TextColor="Black" FontSize="20" Grid.Row="5" Grid.Column="1" HorizontalTextAlignment="Start" Grid.ColumnSpan="3"/>
+
+            <Button x:Name="Salir" Text="Cerrar Sesion" BackgroundColor="#0B5894" TextColor="White" VerticalOptions="Center"
+                HorizontalOptions="FillAndExpand" Clicked="Salir_Clicked" BorderWidth="20" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"/>
+        </Grid>
+    </StackLayout>
+    <!--<ContentPage.Content>
         <StackLayout Padding="10,30,10,10" Spacing="10">
             <Label Text="Perfil de Usuario"  FontSize="30" HorizontalOptions="Center" 
                    VerticalOptions="Center" Margin="20"/>
@@ -35,5 +73,5 @@
             <Button x:Name="Salir" Text="Cerrar Sesion"
                     Clicked="Salir_Clicked"/>
         </StackLayout>
-    </ContentPage.Content>
+    </ContentPage.Content>-->
 </ContentPage>

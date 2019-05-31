@@ -37,6 +37,21 @@ namespace AppVLO.Model
             }
         }
 
+        public string VEstado
+        {
+            get
+            {
+                if(Estado == "Green")
+                {
+                    return "Disponible";
+                }
+                else
+                {
+                    return "Ocupada";
+                }
+            }
+        }
+
         //public override string ToString()
         //{
         //    return string.Format("Mesa {0}",NumMesa);

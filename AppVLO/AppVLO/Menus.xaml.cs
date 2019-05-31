@@ -81,7 +81,10 @@ namespace AppVLO
                     txtCliente.Text = PedidoDescargado.Cliente.ToString();
                     txtPersonas.Text = PedidoDescargado.Cantidad.ToString();
                 }
-
+                if (PedidoDescargado != null)
+                {
+                    OcuparMesa.IsEnabled = false;
+                }
             }
 
 
@@ -106,10 +109,7 @@ namespace AppVLO
 
         private async void OcuparMesa_Clicked(object sender, EventArgs e)
         {
-            if (PedidoDescargado != null)
-            {
-                OcuparMesa.IsEnabled = false;
-            }
+            
                 if (string.IsNullOrEmpty(txtCliente.Text) || string.IsNullOrEmpty(txtPersonas.Text))
                 {
                     await DisplayAlert("Mensaje", "Debe proporcionar nombre de cliente y Numero de comensales", "ok");

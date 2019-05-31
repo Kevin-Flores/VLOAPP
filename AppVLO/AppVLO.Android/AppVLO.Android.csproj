@@ -106,13 +106,7 @@
     <AndroidResource Include="Resources\drawable\pedido.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\playa.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\drawable\vlo.webp" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Logo.png" />
+    <AndroidResource Include="Resources\drawable\login.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
