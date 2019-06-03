@@ -19,6 +19,7 @@ namespace AppVLO
 		}
 
         Pedido PedidoDescargado { get; set; }
+        string IDPedido;
 
         protected async override void OnAppearing()
         {
@@ -38,9 +39,10 @@ namespace AppVLO
                 result = response.Content.ReadAsStringAsync().Result;
 
             }
-            catch (Exception)
+            catch (Exception ea)
             {
-                await DisplayAlert("Error", $"Problemas de conexión", "Ok");
+                var oi = ea.Message;
+                await DisplayAlert("Error", $"Problemas de conexión \n {oi}", "Ok");
                 return;
             }
 
@@ -48,46 +50,50 @@ namespace AppVLO
 
             listMesas.ItemsSource = TipoMenu;
 
-            string Ocupada;
-            try
+            if (TipoMenu.Count > 0)
             {
-                HttpClient client = new HttpClient
+                string Ocupada;
+                try
                 {
-                    BaseAddress = new Uri(VarGlobal.Link)
-                };
-                string url = string.Format("api/Pedidoes");
-                var response = await client.GetAsync(url);
-                Ocupada = response.Content.ReadAsStringAsync().Result;
+                    HttpClient client = new HttpClient
+                    {
+                        BaseAddress = new Uri(VarGlobal.Link)
+                    };
+                    string url = string.Format("api/Pedidoes");
+                    var response = await client.GetAsync(url);
+                    Ocupada = response.Content.ReadAsStringAsync().Result;
 
-            }
-            catch (Exception)
-            {
-                await DisplayAlert("Error", $"Problemas de conexión", "Ok");
-                return;
-            }
-
-            List<Model.Pedido> Pedido = JsonConvert.DeserializeObject<List<Model.Pedido>>(Ocupada);
-
-
-            if (Pedido.Count > 0)
-            {
-                var PedidoEstaMesa = from p in Pedido
-                                     where p.IdMesa == ((MesasD)BindingContext).IdMesa && p.Estado == 1
-                                     select p;
-                if (PedidoEstaMesa != null)
-                {
-                     PedidoDescargado = PedidoEstaMesa.FirstOrDefault();
-
-                    txtCliente.Text = PedidoDescargado.Cliente.ToString();
-                    txtPersonas.Text = PedidoDescargado.Cantidad.ToString();
                 }
-                if (PedidoDescargado != null)
+                catch (Exception)
                 {
-                    OcuparMesa.IsEnabled = false;
+                    await DisplayAlert("Error", $"Problemas de conexión", "Ok");
+                    return;
                 }
+
+                IEnumerable<Model.Pedido> VarPedido = new List<Model.Pedido>();
+                VarPedido = JsonConvert.DeserializeObject<List<Model.Pedido>>(Ocupada);
+
+
+                if (VarPedido.Count<Pedido>() > 0)
+                {
+                    VarPedido = from p in VarPedido
+                                         where p.IdMesa == ((MesasD)BindingContext).IdMesa && p.Estado == 1
+                                         select p;
+
+                    PedidoDescargado = VarPedido.FirstOrDefault();
+                    if (PedidoDescargado != null)
+                    {
+                        txtCliente.Text = PedidoDescargado.Cliente.ToString();
+                        txtPersonas.Text = PedidoDescargado.Cantidad.ToString();
+                        IDPedido = PedidoDescargado.IdPedido.ToString();
+                    }
+                    if (PedidoDescargado != null)
+                    {
+                        OcuparMesa.IsEnabled = false;
+                    }
+                }
+
             }
-
-
             //foreach (var M in Pedido)
             //{
             //    if (M.Estado == 1 && ((MesasD)BindingContext).Estado == "Red")
@@ -125,8 +131,18 @@ namespace AppVLO
                 IdUser = Convert.ToInt32(VarGlobal.Global)
             };
 
+            var Vmesa = new MesasD();
+
+            Vmesa.IdMesa = ((MesasD)BindingContext).IdMesa;
+            Vmesa.NumMesa_BF = ((MesasD)BindingContext).NumMesa_BF;
+            Vmesa.Estado = false;
+
+
             var jsonRequest = JsonConvert.SerializeObject(pedido);
             var content = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
+
+            var jsonRequestMesa = JsonConvert.SerializeObject(Vmesa);
+            var contentMesa = new StringContent(jsonRequestMesa, Encoding.UTF8, "text/json");
 
             string result;
             string resultMesas;
@@ -138,8 +154,9 @@ namespace AppVLO
                 {
                     BaseAddress = new Uri(VarGlobal.Link)
                 };
-                string urlMesas = string.Format("api/Mesas");
-                var responseMesas = await clientMesas.GetAsync(urlMesas);
+                
+                string urlMesas = string.Format("api/Mesas/");
+                var responseMesas = await clientMesas.PutAsync(urlMesas, contentMesa);
                 resultMesas = responseMesas.Content.ReadAsStringAsync().Result;
                 /**/
 
@@ -150,6 +167,9 @@ namespace AppVLO
                 string url = string.Format("api/Pedidoes");
                 var response = await client.PostAsync(url, content);
                 result = response.Content.ReadAsStringAsync().Result;
+                OcuparMesa.IsEnabled = false;
+
+
 
             }
             catch (Exception)
@@ -159,9 +179,49 @@ namespace AppVLO
             }
         }
 
-        private void Cancelar_Clicked(object sender, EventArgs e)
+        private async void Cancelar_Clicked(object sender, EventArgs e)
         {
+            var Vmesa = new MesasD();
 
+            Vmesa.IdMesa = ((MesasD)BindingContext).IdMesa;
+            Vmesa.NumMesa_BF = ((MesasD)BindingContext).NumMesa_BF;
+            Vmesa.Estado = true;
+
+            var jsonRequestMesa = JsonConvert.SerializeObject(Vmesa);
+            var contentMesa = new StringContent(jsonRequestMesa, Encoding.UTF8, "text/json");
+            
+            string resultMesas;
+            string resultPedido;
+            try
+            {
+                /**/
+
+                HttpClient clientMesas = new HttpClient
+                {
+                    BaseAddress = new Uri(VarGlobal.Link)
+                };
+
+                string urlMesas = string.Format("api/Mesas/");
+                var responseMesas = await clientMesas.PutAsync(urlMesas, contentMesa);
+                resultMesas = responseMesas.Content.ReadAsStringAsync().Result;
+                /**/
+
+                HttpClient clientPedido = new HttpClient
+                {
+                    BaseAddress = new Uri(VarGlobal.Link)
+                };
+
+                string urlPedido = string.Format($"api/Pedidoes/{IDPedido}");
+                var responsePedido = await clientPedido.DeleteAsync(urlPedido);
+                resultPedido = responseMesas.Content.ReadAsStringAsync().Result;
+
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Error", $"Problemas de conexión", "Ok");
+                return;
+            }
+            await Navigation.PopAsync();
         }
 
         private void VerDetalle_Clicked(object sender, EventArgs e)

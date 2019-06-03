@@ -8,7 +8,7 @@ namespace AppVLO.Model
     {
         public int IdMesa { get; set; }
 
-        private string NumMesa_BF;
+        public string NumMesa_BF { get; set; }
 
         public string NumMesa
         {
@@ -16,13 +16,13 @@ namespace AppVLO.Model
             set { NumMesa_BF = value; }
         }
 
-        public bool Estado_ { get; set; }
+        public bool Estado { get; set; }
 
-        public string Estado
+        public string Estado_
         {
             get
             {
-                if (Estado_ == true)
+                if (Estado == true)
                 {
                     return "Green";
                 }
@@ -33,7 +33,7 @@ namespace AppVLO.Model
             }
             set
             {
-                Estado_ = Convert.ToBoolean(value);
+                Estado = Convert.ToBoolean(value);
             }
         }
 
@@ -41,7 +41,7 @@ namespace AppVLO.Model
         {
             get
             {
-                if(Estado == "Green")
+                if(Estado_ == "Green")
                 {
                     return "Disponible";
                 }
