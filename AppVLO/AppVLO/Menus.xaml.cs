@@ -13,10 +13,11 @@ namespace AppVLO
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Menus : ContentPage
 	{
+
 		public Menus ()
 		{
 			InitializeComponent ();
-		}
+        }
 
         Pedido PedidoDescargado { get; set; }
         string IDPedido;
@@ -131,11 +132,12 @@ namespace AppVLO
                 IdUser = Convert.ToInt32(VarGlobal.Global)
             };
 
-            var Vmesa = new MesasD();
-
-            Vmesa.IdMesa = ((MesasD)BindingContext).IdMesa;
-            Vmesa.NumMesa_BF = ((MesasD)BindingContext).NumMesa_BF;
-            Vmesa.Estado = false;
+            var Vmesa = new MesasD
+            {
+                IdMesa = ((MesasD)BindingContext).IdMesa,
+                NumMesa_BF = ((MesasD)BindingContext).NumMesa_BF,
+                Estado = false
+            };
 
 
             var jsonRequest = JsonConvert.SerializeObject(pedido);
@@ -145,10 +147,10 @@ namespace AppVLO
             var contentMesa = new StringContent(jsonRequestMesa, Encoding.UTF8, "text/json");
 
             string result;
-            string resultMesas;
+            //string resultMesas;
             try
             {
-                /**/
+                /*
 
                 HttpClient clientMesas = new HttpClient
                 {
@@ -158,7 +160,7 @@ namespace AppVLO
                 string urlMesas = string.Format("api/Mesas/");
                 var responseMesas = await clientMesas.PutAsync(urlMesas, contentMesa);
                 resultMesas = responseMesas.Content.ReadAsStringAsync().Result;
-                /**/
+                */
 
                 HttpClient client = new HttpClient
                 {
@@ -181,20 +183,27 @@ namespace AppVLO
 
         private async void Cancelar_Clicked(object sender, EventArgs e)
         {
-            var Vmesa = new MesasD();
+            if(string.IsNullOrEmpty(txtCliente.Text) || string.IsNullOrEmpty(txtPersonas.Text))
+            {
+                await Navigation.PopAsync();
+                return;
+            }
 
-            Vmesa.IdMesa = ((MesasD)BindingContext).IdMesa;
-            Vmesa.NumMesa_BF = ((MesasD)BindingContext).NumMesa_BF;
-            Vmesa.Estado = true;
+            var Vmesa = new MesasD
+            {
+                IdMesa = ((MesasD)BindingContext).IdMesa,
+                NumMesa_BF = ((MesasD)BindingContext).NumMesa_BF,
+                Estado = true
+            };
 
             var jsonRequestMesa = JsonConvert.SerializeObject(Vmesa);
             var contentMesa = new StringContent(jsonRequestMesa, Encoding.UTF8, "text/json");
             
-            string resultMesas;
-            string resultPedido;
+            //string resultMesas;
+            //string resultPedido;
             try
             {
-                /**/
+                /*
 
                 HttpClient clientMesas = new HttpClient
                 {
@@ -204,7 +213,7 @@ namespace AppVLO
                 string urlMesas = string.Format("api/Mesas/");
                 var responseMesas = await clientMesas.PutAsync(urlMesas, contentMesa);
                 resultMesas = responseMesas.Content.ReadAsStringAsync().Result;
-                /**/
+                */
 
                 HttpClient clientPedido = new HttpClient
                 {
@@ -213,7 +222,13 @@ namespace AppVLO
 
                 string urlPedido = string.Format($"api/Pedidoes/{IDPedido}");
                 var responsePedido = await clientPedido.DeleteAsync(urlPedido);
-                resultPedido = responseMesas.Content.ReadAsStringAsync().Result;
+                //resultPedido = responseMesas.Content.ReadAsStringAsync().Result;
+                if(!responsePedido.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Aviso", "No puede cancelar", "OK");
+                    Cancelar.IsEnabled = false;
+                    return;
+                }
 
             }
             catch (Exception)

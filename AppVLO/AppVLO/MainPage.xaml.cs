@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using AppVLO.Model;
 using Xamarin.Forms.PlatformConfiguration;
 using System.Threading;
+using Android.Views;
 
 namespace AppVLO
 {
@@ -19,6 +20,13 @@ namespace AppVLO
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
             NavigationPage.SetHasBackButton(this, false);
+            txtUser.Focus();
+        }
+        
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            txtUser.Focus();
         }
 
         protected override bool OnBackButtonPressed()
@@ -30,55 +38,136 @@ namespace AppVLO
             return false;
         }
 
-        private async void BtnIngresar_Clicked(object sender, EventArgs e)
+        //private async void BtnIngresar_Clicked(object sender, EventArgs e)
+        //{
+        //    if (string.IsNullOrEmpty(txtUser.Text))
+        //    {
+        //        await DisplayAlert("Aviso", "Debe ingresar un usuario", "Ok");
+        //        txtUser.Focus();
+        //        return;
+        //    }
+        //    if (string.IsNullOrEmpty(txtPassword.Text))
+        //    {
+        //        await DisplayAlert("Aviso", "Debe ingresar una contraseña", "Ok");
+        //        txtPassword.Focus();
+        //        return;
+        //    }
+        //    waitActivityIndicator.IsRunning = true;
+        //    string result;
+        //    try
+        //    {
+        //        btnIngresar.IsEnabled = false;
+        //        HttpClient client = new HttpClient
+        //        {
+        //            BaseAddress = new Uri(VarGlobal.Link)
+        //        };
+        //        string url = string.Format("api/Usuarios/{0}/{1}", txtUser.Text, txtPassword.Text);
+        //        var response = await client.GetAsync(url);
+        //        result = response.Content.ReadAsStringAsync().Result;
+        //        btnIngresar.IsEnabled = true;
+
+        //    }
+        //    catch (Exception)
+        //    {
+        //        await DisplayAlert("Error",$"Problemas de conexión","Ok");
+        //        btnIngresar.IsEnabled = true;
+        //        waitActivityIndicator.IsRunning = false;
+        //        return;
+        //    }
+        //    waitActivityIndicator.IsRunning = false;
+
+        //    if (string.IsNullOrEmpty(result) || result == "null")
+        //    {
+        //        await DisplayAlert("Aviso", "Usuario o Contraseña Incorrectos", "Ok");
+        //        txtUser.Text = string.Empty;
+        //        txtPassword.Text = string.Empty;
+        //        txtUser.Focus();
+        //        return;
+        //    }
+        //    var Usuarios = JsonConvert.DeserializeObject<Usuarios>(result);
+        //    VarGlobal.Global = Usuarios.IdUser.ToString();
+        //    var NavPag = new NavigationPage(new Inicio()) { };
+        //    NavPag.BarBackgroundColor = Color.FromHex("#0B5894");
+        //    await Navigation.PushModalAsync(NavPag);
+        //}
+
+        private void TxtUser_Completed(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtUser.Text))
+            if ((sender as Entry).ReturnType == ReturnType.Go)
             {
-                await DisplayAlert("Aviso", "Debe ingresar un usuario", "Ok");
-                txtUser.Focus();
-                return;
-            }
-            if (string.IsNullOrEmpty(txtPassword.Text))
-            {
-                await DisplayAlert("Aviso", "Debe ingresar una contraseña", "Ok");
                 txtPassword.Focus();
-                return;
             }
-            waitActivityIndicator.IsRunning = true;
-            string result;
-            try
+        }
+
+        private async void TxtPassword_Completed(object sender, EventArgs e)
+        {
+            if ((sender as Entry).ReturnType == ReturnType.Done)
             {
-                btnIngresar.IsEnabled = false;
-                HttpClient client = new HttpClient
+                if (string.IsNullOrEmpty(txtUser.Text))
                 {
-                    BaseAddress = new Uri(VarGlobal.Link)
-                };
-                string url = string.Format("api/Usuarios/{0}/{1}", txtUser.Text, txtPassword.Text);
-                var response = await client.GetAsync(url);
-                result = response.Content.ReadAsStringAsync().Result;
-                btnIngresar.IsEnabled = true;
+                    await DisplayAlert("Aviso", "Debe ingresar un usuario", "Ok");
+                    txtUser.Focus();
+                    return;
+                }
+                if (string.IsNullOrEmpty(txtPassword.Text))
+                {
+                    await DisplayAlert("Aviso", "Debe ingresar una contraseña", "Ok");
+                    txtPassword.Focus();
+                    return;
+                }
+                waitActivityIndicator.IsRunning = true;
+                string result;
+                try
+                {
+                    //btnIngresar.IsEnabled = false;
+                    HttpClient client = new HttpClient
+                    {
+                        BaseAddress = new Uri(VarGlobal.Link)
+                    };
+                    string url = string.Format("api/Usuarios/{0}/{1}", txtUser.Text, txtPassword.Text);
+                    var response = await client.GetAsync(url);
+                    result = response.Content.ReadAsStringAsync().Result;
+                    //btnIngresar.IsEnabled = true;
 
-            }
-            catch (Exception)
-            {
-                await DisplayAlert("Error",$"Problemas de conexión","Ok");
-                btnIngresar.IsEnabled = true;
+                }
+                catch (Exception)
+                {
+                    await DisplayAlert("Error", $"Problemas de conexión", "Ok");
+                    //btnIngresar.IsEnabled = true;
+                    waitActivityIndicator.IsRunning = false;
+                    return;
+                }
                 waitActivityIndicator.IsRunning = false;
-                return;
-            }
-            waitActivityIndicator.IsRunning = false;
 
-            if (string.IsNullOrEmpty(result) || result == "null")
-            {
-                await DisplayAlert("Aviso", "Usuario o Contraseña Incorrectos", "Ok");
-                txtUser.Text = string.Empty;
-                txtPassword.Text = string.Empty;
-                txtUser.Focus();
-                return;
+                if (string.IsNullOrEmpty(result) || result == "null")
+                {
+                    await DisplayAlert("Aviso", "Usuario o Contraseña Incorrectos", "Ok");
+                    txtUser.Text = string.Empty;
+                    txtPassword.Text = string.Empty;
+                    txtUser.Focus();
+                    return;
+                }
+                var Usuarios = JsonConvert.DeserializeObject<Usuarios>(result);
+                VarGlobal.Global = Usuarios.IdUser.ToString();
+                var NavPag = new NavigationPage(new Inicio()) { };
+                NavPag.BarBackgroundColor = Color.FromHex("#0B5894");
+                await Navigation.PushModalAsync(NavPag);
             }
-            var Usuarios = JsonConvert.DeserializeObject<Usuarios>(result);
-            VarGlobal.Global = Usuarios.IdUser.ToString();
-            await Navigation.PushModalAsync(new NavigationPage(new Inicio()));
+        }
+
+        private void Ver_Clicked(object sender, EventArgs e)
+        {
+            if(txtPassword.IsPassword == true)
+            {
+                txtPassword.IsPassword = false;
+                FileImageSource ruta = "nover.png";
+                ver.Image = ruta;
+            }else
+            {
+                txtPassword.IsPassword = true;
+                FileImageSource ruta = "ver.png";
+                ver.Image = ruta;
+            }
         }
     }
 }

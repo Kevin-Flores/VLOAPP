@@ -11,7 +11,8 @@ namespace AppVLO
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage()) { BarBackgroundColor = Color.FromHex("#0B5894"), BarTextColor = Color.White };
+            //MainPage = new NavigationPage(new MainPage());
 
         }
 

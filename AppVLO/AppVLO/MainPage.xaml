@@ -3,18 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AppVLO"
              x:Class="AppVLO.MainPage"
-             BackgroundImage="">
-    <StackLayout Padding="15,30,15,15" Spacing="10">
-        <!--<Label Text="Login" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontAttributes="Bold"/>-->
+             BackgroundImage="vloR.jpg">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"
+                         Padding="30" Spacing="40">
+
+                <Frame BackgroundColor="#C00B5894" HasShadow="False" CornerRadius="30" BorderColor="White">
+                    <StackLayout Orientation="Vertical" Spacing="10">
+                        <Image Source="lgVlo.png"></Image>
+                        <Entry x:Name="txtUser" Placeholder="USUARIO"   
+                           PlaceholderColor="White" HeightRequest="40" HorizontalTextAlignment="Center"  
+                           TextColor="White" ReturnType="Go" Completed="TxtUser_Completed"/>
+                        <StackLayout Orientation="Horizontal">
+                        <Entry x:Name="txtPassword" Placeholder="PASSWORD" IsPassword="True"
+                           PlaceholderColor="White" HeightRequest="40" HorizontalTextAlignment="Center"
+                           TextColor="White" ReturnType="Done" Completed="TxtPassword_Completed"/>
+                            <Button Image="ver.png" x:Name="ver" Clicked="Ver_Clicked" BackgroundColor="Transparent"
+                                    HeightRequest="50" WidthRequest="50"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+                <ActivityIndicator x:Name="waitActivityIndicator" VerticalOptions="Center" HorizontalOptions="Center" />
+                <!--<Button x:Name="btnIngresar" Clicked="BtnIngresar_Clicked" Text="Ingresar" TextColor="White"  
+                    FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Opacity="0.75"
+                        BackgroundColor="#0B5894" BorderColor="White" CornerRadius="30"/>-->
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+    <!--<StackLayout Padding="15,30,15,15" Spacing="10">
+        <Label Text="Login" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontAttributes="Bold"/>
         <Image Source="login.png"></Image>
         <ActivityIndicator x:Name="waitActivityIndicator" VerticalOptions="Center" HorizontalOptions="Center"/>
-        <!--<Label Text="Usuario:" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontAttributes="Bold"/>-->
+        <Label Text="Usuario:" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontAttributes="Bold"/>
         <Entry x:Name="txtUser" HorizontalTextAlignment="Center" Placeholder="Ingrese su usuario" HorizontalOptions="FillAndExpand"
                VerticalOptions="Center" TextColor="White" FontAttributes="Bold"/>
-        <!--<Label Text="Contraseña:" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontAttributes="Bold"/>-->
+        <Label Text="Contraseña:" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontAttributes="Bold"/>
         <Entry x:Name="txtPassword" HorizontalTextAlignment="Center" Placeholder="Ingrese su contraña" HorizontalOptions="FillAndExpand"
                VerticalOptions="Center" IsPassword="True" TextColor="White" FontAttributes="Bold"/>
         <Button x:Name="btnIngresar" Text="Ingresar" BackgroundColor="OrangeRed" TextColor="White" VerticalOptions="Center"
                 HorizontalOptions="FillAndExpand" Clicked="BtnIngresar_Clicked" BorderWidth="20"  />
-    </StackLayout>
+    </StackLayout>-->
 </ContentPage>

@@ -16,7 +16,7 @@ namespace AppVLO.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
+            Window.SetStatusBarColor(Android.Graphics.Color.ParseColor("#0B5894"));
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());

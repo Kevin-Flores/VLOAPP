@@ -2,7 +2,9 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:AppVLO"
-            x:Class="AppVLO.Inicio">
-    <local:User Icon="user.png" Title="Usuario"/>
+            x:Class="AppVLO.Inicio"
+            BarBackgroundColor="#0B5894"
+            BarTextColor="White">
+    <local:User Icon="user.png" Title="Usuario" />
     <local:Mesas Icon="pedido.png" Title="Mesas"/>
 </TabbedPage>
