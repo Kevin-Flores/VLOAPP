@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Services\FileHelper.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -165,5 +166,8 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\pedido.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\bebidas.png" />
   </ItemGroup>
 </Project>

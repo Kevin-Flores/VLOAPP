@@ -6,7 +6,7 @@
         <StackLayout>
             <Label Text="Menus"  FontSize="30" HorizontalOptions="Center" 
                    VerticalOptions="Center" Margin="20"/>
-            <ListView x:Name="listOMenus" SeparatorVisibility="None" HasUnevenRows="True">
+            <ListView x:Name="listOMenus" ItemTapped="ListOMenus_ItemTapped" SeparatorVisibility="None" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                 <DataTemplate >
                     <ViewCell>

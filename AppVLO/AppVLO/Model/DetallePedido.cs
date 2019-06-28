@@ -14,9 +14,9 @@ namespace AppVLO.Model
         //Tabla Pedido
         public int IdPedido { get; set; }
 
-        public int Cantidad { get; set; }
-        public int Sesion { get; set; }
+        public int cantidad { get; set; }
         public int Estado { get; set; }
         public string Termino { get; set; }
+        public string Comentarios { get; set; }
     }
 }

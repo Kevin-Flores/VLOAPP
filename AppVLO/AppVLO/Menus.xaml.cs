@@ -104,16 +104,6 @@ namespace AppVLO
             //}
         }
 
-        private async void ListMesas_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-
-            if (e.SelectedItem is TipoMenu _Data)
-            {
-               
-                await Navigation.PushAsync(new OpcionMenu { BindingContext = _Data });
-            }
-        }
-
         private async void OcuparMesa_Clicked(object sender, EventArgs e)
         {
             
@@ -241,7 +231,54 @@ namespace AppVLO
 
         private void VerDetalle_Clicked(object sender, EventArgs e)
         {
+            Navigation.PushAsync(new CargarPedido((MesasD)BindingContext));
+        }
 
+        private async void ListMesas_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+
+            listMesas.SelectedItem = null;
+            string Ocupada;
+            try
+            {
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(VarGlobal.Link)
+                };
+                string url = string.Format("api/Pedidoes");
+                var response = await client.GetAsync(url);
+                Ocupada = response.Content.ReadAsStringAsync().Result;
+
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Error", $"Problemas de conexión", "Ok");
+                return;
+            }
+
+            IEnumerable<Model.Pedido> VarPedido = new List<Model.Pedido>();
+            VarPedido = JsonConvert.DeserializeObject<List<Model.Pedido>>(Ocupada);
+
+            Pedido PedidoDes = new Pedido();
+            if (VarPedido.Count<Pedido>() > 0)
+            {
+                VarPedido = from p in VarPedido
+                            where p.IdMesa == ((MesasD)BindingContext).IdMesa && p.Estado == 1
+                            select p;
+
+                PedidoDes = VarPedido.FirstOrDefault();
+            }
+
+            if (e.Item is TipoMenu _Data)
+            {
+                
+                OpcionMenu Pagina = new OpcionMenu(PedidoDes)
+                {
+                    BindingContext = _Data
+                };
+                await Navigation.PushAsync(Pagina);
+                // await Navigation.PushAsync(new OpcionMenu { BindingContext = _Data });
+            }
         }
 
         //private void ListMesas_ItemTapped(object sender, ItemTappedEventArgs e)

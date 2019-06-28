@@ -2,68 +2,86 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppVLO.Menus">
-    
-    <ContentPage.Content>
-        <StackLayout Orientation="Horizontal">
-
+    <StackLayout>
+        <Frame CornerRadius="30" BorderColor="#0B5894" Margin="10,10,10,10" >
             
-            
-            <StackLayout Padding="10,30,10,10" Spacing="10">
+            <Grid Padding="5,5,5,5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <Label x:Name="lblOrdenes" Text="Orden Mesa"  FontSize="20" HorizontalOptions="Center" 
-                   VerticalOptions="Center" Margin="20"/>
+                    <Label x:Name="lblOrdenes" Text="Orden Mesa"  FontSize="20" HorizontalOptions="Center" 
+                   VerticalOptions="Center" Margin="20" Grid.Row="0" Grid.ColumnSpan="4"/>
 
-                <Label Text="Cliente:"
+                    <Label Text="Cliente:" Grid.Row="1" Grid.Column="0"
                 VerticalOptions="Center"  FontSize="20"
                 HorizontalOptions="CenterAndExpand" />
 
-                <Entry x:Name="txtCliente" Placeholder="Nombre del cliente"
-                VerticalOptions="Center"  FontSize="20"
+                    <Entry x:Name="txtCliente" Placeholder="Nombre del cliente"
+                VerticalOptions="Center"  FontSize="20" Grid.Row="1" Grid.Column="1"
                 HorizontalOptions="CenterAndExpand"/>
 
-                <Label Text="Numero Personas:"
+                    <Label Text="Personas:" Grid.Row="1" Grid.Column="2"
                 VerticalOptions="Center"  FontSize="20"
                 HorizontalOptions="CenterAndExpand" />
 
-                <Entry x:Name="txtPersonas" Placeholder="Numero de personass"
-                VerticalOptions="Center"  FontSize="20"
-                HorizontalOptions="CenterAndExpand" />
-                
-                <Button Text="Ocupar Mesa" x:Name="OcuparMesa" Clicked="OcuparMesa_Clicked"
-                        VerticalOptions="Center"  FontSize="20"
+                    <Entry x:Name="txtPersonas" Placeholder="Numero de personass"
+                VerticalOptions="Center"  FontSize="20" Grid.Row="1" Grid.Column="3"
                 HorizontalOptions="CenterAndExpand" />
 
-                <Button Text="Cancelar" x:Name="Cancelar" Clicked="Cancelar_Clicked"
-                        VerticalOptions="Center"  FontSize="20"
+                    <Button Text="Ocupar Mesa" x:Name="OcuparMesa" Clicked="OcuparMesa_Clicked"
+                        VerticalOptions="Center"  FontSize="20" Grid.Row="2" Grid.Column="0"
+                        HorizontalOptions="FillAndExpand" Grid.ColumnSpan="2" TextColor="White"
+                        BorderWidth="2" CornerRadius="20" BorderColor="White" BackgroundColor="#0B5894"/>
+
+                    <Button Text="Cancelar" x:Name="Cancelar" Clicked="Cancelar_Clicked"
+                        VerticalOptions="Center"  FontSize="20" Grid.Row="3" Grid.Column="0"
+                        HorizontalOptions="FillAndExpand" Grid.ColumnSpan="2" TextColor="White"
+                        BorderWidth="2" CornerRadius="20" BorderColor="White" BackgroundColor="#0B5894"/>
+
+                    <Button Text="Ver Detalle" x:Name="VerDetalle" Clicked="VerDetalle_Clicked"
+                        VerticalOptions="Center"  FontSize="20" Grid.Row="4" Grid.Column="0"
+                        HorizontalOptions="FillAndExpand" Grid.ColumnSpan="2" TextColor="White"
+                        BorderWidth="2" CornerRadius="20" BorderColor="White" BackgroundColor="#0B5894"/>
+
+                    <Label Text="TotalPagar" x:Name="TotalPagar" Grid.Row="5" Grid.Column="0" 
+                VerticalOptions="Center"  FontSize="20" Grid.ColumnSpan="2"
                 HorizontalOptions="CenterAndExpand" />
 
-                <Button Text="Ver Detalle" x:Name="VerDetalle" Clicked="VerDetalle_Clicked"
-                        VerticalOptions="Center"  FontSize="20"
-                HorizontalOptions="CenterAndExpand" />
+                    <Label Text="Menus"  FontSize="30" HorizontalOptions="Center" 
+                   VerticalOptions="Center" Margin="20" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"/>
 
-                <Label Text="TotalPagar" x:Name="TotalPagar" 
-                VerticalOptions="Center"  FontSize="20"
-                HorizontalOptions="CenterAndExpand" />
+                    <ListView x:Name="listMesas" SeparatorVisibility="None" HasUnevenRows="True" ItemTapped="ListMesas_ItemTapped"
+                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="3">
+                        <ListView.ItemTemplate>
+                            <DataTemplate >
+                                <ViewCell>
+                                    <StackLayout Margin="10" Padding="10">
+                                        <Grid>
+                                            <Label Text="{Binding Nombre}" VerticalOptions="CenterAndExpand"  HorizontalOptions="Center"
+                                        VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+                                        TextColor="Black"/>
+                                            <BoxView BackgroundColor="#0B5894" HorizontalOptions="Start" WidthRequest="3"></BoxView>
+                                            <BoxView BackgroundColor="#0B5894" VerticalOptions="End" HeightRequest="3"></BoxView>
+                                        </Grid>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
-            </StackLayout>
-            <StackLayout Padding="10,30,10,10" Spacing="10">
-                <Label Text="Tipo de Menu"  FontSize="30" HorizontalOptions="Center" 
-                   VerticalOptions="Center" Margin="20"/>
-                
-                <ListView x:Name="listMesas" SeparatorVisibility="None" HasUnevenRows="True" ItemSelected="ListMesas_ItemSelected" >
-                    <ListView.ItemTemplate>
-                        <DataTemplate >
-                            <ViewCell>
-                                <StackLayout BackgroundColor="OrangeRed" Margin="10" Padding="10">
-                                    <Label Text="{Binding Nombre}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"
-                           VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
-                           TextColor="Black"/>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-        </StackLayout>
-    </ContentPage.Content>
+                </Grid>
+        </Frame>
+    </StackLayout>
 </ContentPage>

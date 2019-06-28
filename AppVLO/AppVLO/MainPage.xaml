@@ -11,24 +11,26 @@
 
                 <Frame BackgroundColor="#C00B5894" HasShadow="False" CornerRadius="30" BorderColor="White">
                     <StackLayout Orientation="Vertical" Spacing="10">
+                        <Grid>
                         <Image Source="lgVlo.png"></Image>
+                        </Grid>
                         <Entry x:Name="txtUser" Placeholder="USUARIO"   
                            PlaceholderColor="White" HeightRequest="40" HorizontalTextAlignment="Center"  
                            TextColor="White" ReturnType="Go" Completed="TxtUser_Completed"/>
-                        <StackLayout Orientation="Horizontal">
-                        <Entry x:Name="txtPassword" Placeholder="PASSWORD" IsPassword="True"
-                           PlaceholderColor="White" HeightRequest="40" HorizontalTextAlignment="Center"
-                           TextColor="White" ReturnType="Done" Completed="TxtPassword_Completed"/>
+                        <Grid>
+                            <Entry x:Name="txtPassword" Placeholder="PASSWORD" IsPassword="True"
+                                    PlaceholderColor="White" HeightRequest="50" HorizontalTextAlignment="Center"
+                                    TextColor="White"/>
                             <Button Image="ver.png" x:Name="ver" Clicked="Ver_Clicked" BackgroundColor="Transparent"
-                                    HeightRequest="50" WidthRequest="50"/>
-                        </StackLayout>
+                                    HeightRequest="50" WidthRequest="50" HorizontalOptions="End"/>
+                        </Grid>
+                        <ActivityIndicator x:Name="waitActivityIndicator" VerticalOptions="Center" HorizontalOptions="Center" />
                     </StackLayout>
                 </Frame>
+                <Button x:Name="btnIngresar" Clicked="BtnIngresar_Clicked" Text="Ingresar" TextColor="White"  
+                    FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand"
+                        BackgroundColor="#0B5894" BorderColor="White" BorderWidth="1" CornerRadius="30"/>
 
-                <ActivityIndicator x:Name="waitActivityIndicator" VerticalOptions="Center" HorizontalOptions="Center" />
-                <!--<Button x:Name="btnIngresar" Clicked="BtnIngresar_Clicked" Text="Ingresar" TextColor="White"  
-                    FontAttributes="Bold" FontSize="Large" VerticalOptions="CenterAndExpand" Opacity="0.75"
-                        BackgroundColor="#0B5894" BorderColor="White" CornerRadius="30"/>-->
             </StackLayout>
         </ScrollView>
 

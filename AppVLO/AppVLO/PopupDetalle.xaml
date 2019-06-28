@@ -3,10 +3,9 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="AppVLO.PopPup"
-    x:Name="pop1">
-
-    <Frame BackgroundColor="White" CornerRadius="6" BorderColor="#0B5894" VerticalOptions="Center" Margin="10,0,10,0">
+    x:Class="AppVLO.PopupDetalle"
+    x:Name="pop2">
+    <Frame BackgroundColor="White" CornerRadius="6" BorderColor="#0B5894" Margin="10,0,10,0" VerticalOptions="Center">
         <Frame.Content>
             <StackLayout>
                 <Entry x:Name="Cantidad" Placeholder="Ingrese Cantidad" Keyboard="Numeric"/>
@@ -23,6 +22,7 @@
                 <Entry x:Name="Comentario" Placeholder="Condiciones Especiales"/>
                 <StackLayout Orientation="Horizontal">
                     <Button Text="Guardar" x:Name="Guardar" Clicked="Guardar_Clicked" HorizontalOptions="StartAndExpand"/>
+                    <Button Text="Borrar" x:Name="Borrar" Clicked="Borrar_Clicked" HorizontalOptions="CenterAndExpand"/>
                     <Button Text="Cancel" x:Name="Cancel" Clicked="Cancel_Clicked" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
             </StackLayout>

@@ -47,9 +47,11 @@ namespace AppVLO
 
         }
 
-        private async void ListMesas_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void ListMesas_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.SelectedItem is MesasD _Data)
+            listMesas.SelectedItem = null;
+
+            if (e.Item is MesasD _Data)
             {
                 await Navigation.PushAsync(new Menus { BindingContext = _Data });
             }

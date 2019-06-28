@@ -7,4 +7,5 @@
             BarTextColor="White">
     <local:User Icon="user.png" Title="Usuario" />
     <local:Mesas Icon="pedido.png" Title="Mesas"/>
+    <local:Bebidas Icon="bebidas.png" Title="Bebidas"/>
 </TabbedPage>

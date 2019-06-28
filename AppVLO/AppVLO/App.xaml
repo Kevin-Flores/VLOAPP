@@ -4,5 +4,13 @@
              x:Class="AppVLO.App">
     <Application.Resources>
 
+        <!--<Color x:Key="Transparente">#00000000</Color>
+
+        <Style TargetType="{x:Type ListView}">
+            <Setter Property="Visual"
+                    Value="{OnPlatform iOS={StaticResource Transparente},
+                                       Android={StaticResource Transparente}}" />
+        </Style>-->
+
     </Application.Resources>
 </Application>
