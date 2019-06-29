@@ -95,7 +95,10 @@ namespace AppVLO
                     await DisplayAlert("Error", $"Problemas de conexión", "Ok");
                     return;
                 }
+
+                await App.Database.DeleteItemAsync(p);
             }
+            await Navigation.PopAsync();
         }
 
         private async void ListaDetalle_Refreshing(object sender, EventArgs e)

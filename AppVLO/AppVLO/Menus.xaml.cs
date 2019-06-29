@@ -99,9 +99,54 @@ namespace AppVLO
             //{
             //    if (M.Estado == 1 && ((MesasD)BindingContext).Estado == "Red")
             //    {
-                   
+
             //    }
             //}
+            string obtener;
+            try
+            {
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(VarGlobal.Link)
+                };
+                string url = string.Format("api/DetallePedidoes");
+                var response = await client.GetAsync(url);
+                obtener = response.Content.ReadAsStringAsync().Result;
+
+            }
+            catch (Exception ea)
+            {
+                var oi = ea.Message;
+                await DisplayAlert("Error", $"Problemas de conexión \n {oi}", "Ok");
+                return;
+            }
+
+            Model.ListaBebida ListaBebida = JsonConvert.DeserializeObject<Model.ListaBebida>(obtener);
+            var resultado = ListaBebida;
+            var pedido = resultado.pedidos;
+            var menus = resultado.menus;
+            var detalle = resultado.detalle;
+            var tipomenu = resultado.tipomenu;
+
+            var query = (from deta in detalle where deta.Estado == 1 || deta.Estado == 2
+                         join pedi in pedido
+                              on deta.IdPedido equals pedi.IdPedido
+                         where (pedi.IdUser == Convert.ToInt32(VarGlobal.Global) && pedi.IdMesa == ((MesasD)BindingContext).IdMesa)
+                         join men in menus
+                              on deta.IdMenu equals men.IdMenu
+                         select new
+                         {
+                             deta.cantidad,
+                             men.Precio
+                         }).ToList();
+            double total = 0;
+
+            foreach (var sum in query)
+            {
+                total = total + (sum.cantidad * sum.Precio);
+            }
+
+            TotalPagar.Text =string.Format("$ {0}", Convert.ToString(total * 1.06));
         }
 
         private async void OcuparMesa_Clicked(object sender, EventArgs e)

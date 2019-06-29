@@ -2,11 +2,31 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppVLO.Bebidas">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+    <StackLayout>
+        <StackLayout BackgroundColor="#0B5894" Padding="0,20,0,20">
+
+            <Label  Text="BEBIDAS" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+
         </StackLayout>
-    </ContentPage.Content>
+        <Frame CornerRadius="30" BorderColor="#0B5894" Margin="10,10,10,10" >
+            <ListView x:Name="listMesas" SeparatorVisibility="None" HasUnevenRows="True" ItemTapped="ListMesas_ItemTapped"
+                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="3">
+                <ListView.ItemTemplate>
+                    <DataTemplate >
+                        <ViewCell>
+                            <StackLayout Margin="10" Padding="10">
+                                <Grid>
+                                    <Label Text="{Binding Nombre}" VerticalOptions="CenterAndExpand"  HorizontalOptions="Center"
+                                        VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+                                        TextColor="Black"/>
+                                    <BoxView BackgroundColor="#0B5894" HorizontalOptions="Start" WidthRequest="3"></BoxView>
+                                    <BoxView BackgroundColor="#0B5894" VerticalOptions="End" HeightRequest="3"></BoxView>
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+    </StackLayout>
 </ContentPage>
