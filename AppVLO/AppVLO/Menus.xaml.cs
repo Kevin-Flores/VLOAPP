@@ -78,7 +78,7 @@ namespace AppVLO
                 if (VarPedido.Count<Pedido>() > 0)
                 {
                     VarPedido = from p in VarPedido
-                                         where p.IdMesa == ((MesasD)BindingContext).IdMesa && p.Estado == 1
+                                         where p.IdMesa == ((MesasD)BindingContext).IdMesa && p.Estado == 1 || p.Estado == 2
                                          select p;
 
                     PedidoDescargado = VarPedido.FirstOrDefault();
@@ -129,9 +129,9 @@ namespace AppVLO
             var tipomenu = resultado.tipomenu;
 
             var query = (from deta in detalle where deta.Estado == 1 || deta.Estado == 2
-                         join pedi in pedido
+                         join pedi in pedido 
                               on deta.IdPedido equals pedi.IdPedido
-                         where (pedi.IdUser == Convert.ToInt32(VarGlobal.Global) && pedi.IdMesa == ((MesasD)BindingContext).IdMesa)
+                         where pedi.IdUser == Convert.ToInt32(VarGlobal.Global) && pedi.IdMesa == ((MesasD)BindingContext).IdMesa
                          join men in menus
                               on deta.IdMenu equals men.IdMenu
                          select new
@@ -146,7 +146,7 @@ namespace AppVLO
                 total = total + (sum.cantidad * sum.Precio);
             }
 
-            TotalPagar.Text =string.Format("$ {0}", Convert.ToString(total * 1.06));
+            TotalPagar.Text =string.Format("$ {0}", Convert.ToString(total * 1.10));
         }
 
         private async void OcuparMesa_Clicked(object sender, EventArgs e)

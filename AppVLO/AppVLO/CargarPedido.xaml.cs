@@ -58,6 +58,7 @@ namespace AppVLO
 
         private async void Enviar_Clicked(object sender, EventArgs e)
         {
+            Enviar.IsEnabled = false;
             var obtener = await App.Database.ObtenerPersonalizado(pedido.IdMesa);
             listaDetalle.ItemsSource = obtener;
             foreach (var p in obtener)
@@ -87,17 +88,18 @@ namespace AppVLO
                     var response = await client.PostAsync(url, content);
                     result = response.Content.ReadAsStringAsync().Result;
 
+                    await App.Database.DeleteItemAsync(p);
 
-                    
                 }
                 catch (Exception)
                 {
                     await DisplayAlert("Error", $"Problemas de conexión", "Ok");
+                    Enviar.IsEnabled = true;
                     return;
                 }
-
-                await App.Database.DeleteItemAsync(p);
+  
             }
+            Enviar.IsEnabled = true;
             await Navigation.PopAsync();
         }
 
