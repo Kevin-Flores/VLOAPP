@@ -9,7 +9,7 @@ using Xamarin.Forms;
 using AppVLO.Model;
 using Xamarin.Forms.PlatformConfiguration;
 using System.Threading;
-using Android.Views;
+//using Android.Views;
 
 namespace AppVLO
 {
@@ -37,7 +37,7 @@ namespace AppVLO
             {
                 Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
             }
-            else if(Device.RuntimePlatform == Device.iOS)
+            else if (Device.RuntimePlatform == Device.iOS)
             {
                 Application.Current.Quit();
             }
@@ -117,9 +117,18 @@ namespace AppVLO
             }
             var Usuarios = JsonConvert.DeserializeObject<Usuarios>(result);
             VarGlobal.Global = Usuarios.IdUser.ToString();
-            var NavPag = new NavigationPage(new Inicio()) { };
-            NavPag.BarBackgroundColor = Color.FromHex("#0B5894");
-            await Navigation.PushModalAsync(NavPag);
+            if(Usuarios.IdRol == 3)
+            {
+                var NavPag = new NavigationPage(new Inicio()) { };
+                NavPag.BarBackgroundColor = Color.FromHex("#0B5894");
+                await Navigation.PushModalAsync(NavPag);
+            }
+            else
+            {
+                var NavPag = new NavigationPage(new User()) { };
+                NavPag.BarBackgroundColor = Color.FromHex("#0B5894");
+                await Navigation.PushModalAsync(NavPag);
+            }
         }
     }
 }

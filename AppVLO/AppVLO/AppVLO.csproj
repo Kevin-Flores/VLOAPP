@@ -27,13 +27,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="DetallePedidos.xaml.cs">
+      <DependentUpon>DetallePedidos.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Bebidas.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="CargarPedido.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="DetallePedido.xaml">
+    <EmbeddedResource Update="DetallePedidos.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Inicio.xaml">

@@ -86,6 +86,11 @@ namespace AppVLO
                     {
                         txtCliente.Text = PedidoDescargado.Cliente.ToString();
                         txtPersonas.Text = PedidoDescargado.Cantidad.ToString();
+                        if (PedidoDescargado.IdUser != Convert.ToInt32(VarGlobal.Global))
+                        {
+                            await DisplayAlert("Aviso","Mesa ocupada por otro usuario","Ok");
+                            await Navigation.PopAsync();
+                        }
                         IDPedido = PedidoDescargado.IdPedido.ToString();
                     }
                     if (PedidoDescargado != null)
@@ -151,13 +156,13 @@ namespace AppVLO
 
         private async void OcuparMesa_Clicked(object sender, EventArgs e)
         {
-            
-                if (string.IsNullOrEmpty(txtCliente.Text) || string.IsNullOrEmpty(txtPersonas.Text))
-                {
-                    await DisplayAlert("Mensaje", "Debe proporcionar nombre de cliente y Numero de comensales", "ok");
-                    return;
-                }
-            
+
+            if (string.IsNullOrEmpty(txtCliente.Text) || string.IsNullOrEmpty(txtPersonas.Text))
+            {
+                await DisplayAlert("Mensaje", "Debe proporcionar nombre de cliente y Numero de comensales", "ok");
+                return;
+            }
+
             var pedido = new Pedido
             {
                 Cantidad = Convert.ToInt32(txtPersonas.Text),
@@ -213,6 +218,41 @@ namespace AppVLO
             {
                 await DisplayAlert("Error", $"Problemas de conexión", "Ok");
                 return;
+            }
+
+            string Ocupada;
+            try
+            {
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(VarGlobal.Link)
+                };
+                string url = string.Format("api/Pedidoes");
+                var response = await client.GetAsync(url);
+                Ocupada = response.Content.ReadAsStringAsync().Result;
+
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Error", $"Problemas de conexión", "Ok");
+                return;
+            }
+
+            IEnumerable<Model.Pedido> VarPedido = new List<Model.Pedido>();
+            VarPedido = JsonConvert.DeserializeObject<List<Model.Pedido>>(Ocupada);
+
+
+            if (VarPedido.Count<Pedido>() > 0)
+            {
+                VarPedido = from p in VarPedido
+                            where p.IdMesa == ((MesasD)BindingContext).IdMesa && p.Estado == 1 || p.Estado == 2
+                            select p;
+
+                PedidoDescargado = VarPedido.FirstOrDefault();
+                if (PedidoDescargado != null)
+                {
+                    IDPedido = PedidoDescargado.IdPedido.ToString();
+                }
             }
         }
 
@@ -274,11 +314,6 @@ namespace AppVLO
             await Navigation.PopAsync();
         }
 
-        private void VerDetalle_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new CargarPedido((MesasD)BindingContext));
-        }
-
         private async void ListMesas_ItemTapped(object sender, ItemTappedEventArgs e)
         {
 
@@ -324,6 +359,16 @@ namespace AppVLO
                 await Navigation.PushAsync(Pagina);
                 // await Navigation.PushAsync(new OpcionMenu { BindingContext = _Data });
             }
+        }
+
+        private void EnEspera_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new CargarPedido((MesasD)BindingContext));
+        }
+
+        private void VerDetalle_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new DetallePedidos((MesasD)BindingContext));
         }
 
         //private void ListMesas_ItemTapped(object sender, ItemTappedEventArgs e)

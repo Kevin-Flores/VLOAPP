@@ -63,12 +63,13 @@ namespace AppVLO
             {
 
                 DetalleEnviar.IdDetalle = 0;
-                DetalleEnviar.IdMenu = 0;
+                DetalleEnviar.IdMenu = _Data.IdMenu;
                 DetalleEnviar.IdPedido = PedidoUsar.IdPedido;
                 DetalleEnviar.IdMesa = PedidoUsar.IdMesa;
                 DetalleEnviar.Termino = "";
                 DetalleEnviar.cantidad = 0;
                 DetalleEnviar.Comentarios = "";
+                DetalleEnviar.Menu = _Data.Nombre;
                 PopupPage PP = new PopPup(DetalleEnviar)
                 {
                     BindingContext = _Data,

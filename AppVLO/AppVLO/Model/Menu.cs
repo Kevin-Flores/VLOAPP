@@ -12,7 +12,12 @@ namespace AppVLO.Model
         public string Nombre { get; set; }
         
         public double Precio { get; set; }
-        
+
+        public string PrecioUnitario
+        {
+            get { return $"Precio: ${Precio}"; }
+        }
+
         public string Descripcion { get; set; }
 
         //Relación con Tipo de Menu

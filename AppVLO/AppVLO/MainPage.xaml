@@ -14,11 +14,11 @@
                         <Grid>
                         <Image Source="lgVlo.png"></Image>
                         </Grid>
-                        <Entry x:Name="txtUser" Placeholder="USUARIO"   
+                        <Entry x:Name="txtUser" Placeholder="USUARIO" BackgroundColor="#C00B5894"
                            PlaceholderColor="White" HeightRequest="40" HorizontalTextAlignment="Center"  
                            TextColor="White" ReturnType="Go" Completed="TxtUser_Completed"/>
                         <Grid>
-                            <Entry x:Name="txtPassword" Placeholder="PASSWORD" IsPassword="True"
+                            <Entry x:Name="txtPassword" BackgroundColor="#C00B5894" Placeholder="PASSWORD" IsPassword="True"
                                     PlaceholderColor="White" HeightRequest="50" HorizontalTextAlignment="Center"
                                     TextColor="White"/>
                             <Button Image="ver.png" x:Name="ver" Clicked="Ver_Clicked" BackgroundColor="Transparent"

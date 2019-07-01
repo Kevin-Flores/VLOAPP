@@ -17,12 +17,14 @@ namespace AppVLO
 		public Bebidas ()
 		{
 			InitializeComponent ();
-		}
-
-        protected async override void OnAppearing()
+            Device.StartTimer(TimeSpan.FromMilliseconds(500), () =>
+            {
+                Cargar();
+                return true;
+            });
+        }
+        async void Cargar()
         {
-            base.OnAppearing();
-            
             string result;
             try
             {
@@ -50,35 +52,84 @@ namespace AppVLO
             var tipomenu = resultado.tipomenu;
 
             var query = (from deta in detalle
-                        join pedi in pedido
-                             on deta.IdPedido equals pedi.IdPedido where pedi.IdUser == Convert.ToInt32(VarGlobal.Global)
-                        join men in menus
-                             on deta.IdMenu equals men.IdMenu
-                        join tmenu in tipomenu
-                                on men.IdTipoMenu equals tmenu.IdTipoMenu where tmenu.Nombre == "Bebidas"
-                        select new
-                        {
-                            men.Nombre,
-                            men.Precio,
-                            deta.IdDetalle,
-                            deta.IdMenu,
-                            deta.IdPedido,
-                            deta.cantidad,
-                            deta.Estado,
-                            deta.Termino,
-                            deta.Comentarios
-                        }).ToList();
+                         where deta.Estado == 1
+                         join pedi in pedido
+                              on deta.IdPedido equals pedi.IdPedido
+                         where pedi.IdUser == Convert.ToInt32(VarGlobal.Global)
+                         join men in menus
+                              on deta.IdMenu equals men.IdMenu
+                         join tmenu in tipomenu
+                                 on men.IdTipoMenu equals tmenu.IdTipoMenu
+                         where tmenu.Nombre == "Bebidas"
+                         select new
+                         {
+                             men.Nombre,
+                             men.Precio,
+                             men.PrecioUnitario,
+                             men.Descripcion,
+                             deta.Canti,
+                             deta.IdDetalle,
+                             deta.IdMenu,
+                             deta.IdPedido,
+                             deta.cantidad,
+                             deta.Estado,
+                             deta.Termino,
+                             deta.Comentarios
+                         }).ToList();
 
             listMesas.ItemsSource = query;
-            //detalle.Join(menus.Join(tipomenu.))
-
-
-            //listMesas.ItemsSource 
         }
 
-        private void ListMesas_ItemTapped(object sender, ItemTappedEventArgs e)
+        protected override void OnAppearing()
         {
+            base.OnAppearing();
 
+            Cargar();
         }
+
+        private async void ListMesas_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            listMesas.SelectedItem = null;
+
+            var opcion = await DisplayAlert("Aviso", "¿Terminar Pedido?","SI","NO");
+
+            if (opcion == true)
+            {
+               
+
+                var detalle1 = JsonConvert.SerializeObject(e.Item);
+                var detalle = JsonConvert.DeserializeObject<mandar>(detalle1);
+
+                string result;
+                try
+                {
+
+                    HttpClient client = new HttpClient
+                    {
+                        BaseAddress = new Uri(VarGlobal.Link)
+                    };
+                    string url = string.Format("api/DetallePedidoes/{0}", detalle.IdDetalle);
+                    var response = await client.DeleteAsync(url);
+                    result = response.Content.ReadAsStringAsync().Result;
+                }
+                catch (Exception)
+                {
+                    await DisplayAlert("Error", $"Problemas de conexión", "Ok");
+                    return;
+                }
+            }
+        }
+    }
+    public class mandar
+    {
+        public string Nombre { get; set; }
+        public double Precio { get; set; }
+        public int IdDetalle { get; set; }
+        public int IdMenu { get; set; }
+        public int IdPedido { get; set; }
+        public int cantidad { get; set; }
+        public int Estado { get; set; }
+        public string Termino { get; set; }
+        public string Comentarios { get; set; }
     }
 }

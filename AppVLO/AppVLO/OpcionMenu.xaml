@@ -10,11 +10,38 @@
                 <ListView.ItemTemplate>
                 <DataTemplate >
                     <ViewCell>
-                            <StackLayout BackgroundColor="OrangeRed" Margin="10" Padding="10">
-                                <Label Text="{Binding Nombre}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"
-                           VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
-                           TextColor="Black"/>
-                        </StackLayout>
+                            <StackLayout Margin="10,10,10,10" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Nombre}" VerticalOptions="CenterAndExpand" TextColor="Black" FontSize="20"
+                                               Grid.Row="0" HorizontalTextAlignment="Center" FontAttributes="Bold" Grid.ColumnSpan="4"
+                                               Grid.Column="0"></Label>
+
+                                    <Label Text="{Binding PrecioUnitario}" VerticalOptions="StartAndExpand" TextColor="Black"
+                                               FontSize="20" Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="Center"
+                                               Grid.ColumnSpan="4"></Label>
+
+                                    <Label Text="{Binding Descripcion}" VerticalOptions="EndAndExpand" TextColor="Black"
+                                               FontSize="20" Grid.Row="2" Grid.Column="0" HorizontalTextAlignment="Center"
+                                               Grid.ColumnSpan="4"></Label>
+
+                                    <BoxView Grid.Row="0" Grid.RowSpan="3" BackgroundColor="#0B5894" HorizontalOptions="Start" WidthRequest="3"></BoxView>
+                                    <BoxView Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" BackgroundColor="#0B5894" HorizontalOptions="End" WidthRequest="3"></BoxView>
+                                    <BoxView Grid.Row="0" Grid.ColumnSpan="4" BackgroundColor="#0B5894" VerticalOptions="End" HeightRequest="3"></BoxView>
+                                    <BoxView Grid.Row="1" Grid.ColumnSpan="4" BackgroundColor="#0B5894" VerticalOptions="End" HeightRequest="3"></BoxView>
+                                    <BoxView Grid.Row="2" Grid.ColumnSpan="4" BackgroundColor="#0B5894" VerticalOptions="End" HeightRequest="3"></BoxView>
+                                </Grid>
+                            </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -144,6 +144,15 @@ namespace AppVLO.Model
             }
         }
 
+        public string Precio {
+            get { return $"Precio: ${PrecioUnitario}"; }
+        }
+
+        public string Canti
+        {
+            get { return $"Cantidad: {cantidad}"; }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

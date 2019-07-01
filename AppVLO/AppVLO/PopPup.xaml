@@ -9,7 +9,11 @@
     <Frame BackgroundColor="White" CornerRadius="6" BorderColor="#0B5894" VerticalOptions="Center" Margin="10,0,10,0">
         <Frame.Content>
             <StackLayout>
-                <Entry x:Name="Cantidad" Placeholder="Ingrese Cantidad" Keyboard="Numeric"/>
+
+                <Label Text="" x:Name="Tema" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                <Label Text="Ingrese la Cantidad:" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                <Entry x:Name="Cantidad" Placeholder="Cantidad" Keyboard="Numeric"/>
+                <Label x:Name="lblCantidad" FontSize="Medium" Text="Ingrese el Termino:" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
                 <Picker x:Name="Termino" Title="Termino">
                     <Picker.Items>
                         <x:String>Ninguno</x:String>
@@ -20,10 +24,13 @@
                         <x:String>Al Carbón</x:String>
                     </Picker.Items>
                 </Picker>
+                <Label Text="Ingrese las Condiciones Especiales:" FontSize="Medium" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
                 <Entry x:Name="Comentario" Placeholder="Condiciones Especiales"/>
                 <StackLayout Orientation="Horizontal">
-                    <Button Text="Guardar" x:Name="Guardar" Clicked="Guardar_Clicked" HorizontalOptions="StartAndExpand"/>
-                    <Button Text="Cancel" x:Name="Cancel" Clicked="Cancel_Clicked" HorizontalOptions="EndAndExpand"/>
+                    <Button Text="Guardar" x:Name="Guardar" Clicked="Guardar_Clicked" HorizontalOptions="StartAndExpand"
+                            BackgroundColor="#0B5894" TextColor="White" BorderWidth="6" CornerRadius="30"/>
+                    <Button Text="Cancel" x:Name="Cancel" Clicked="Cancel_Clicked" HorizontalOptions="EndAndExpand"
+                            BackgroundColor="#0B5894" TextColor="White" BorderWidth="6" CornerRadius="30"/>
                 </StackLayout>
             </StackLayout>
         </Frame.Content>

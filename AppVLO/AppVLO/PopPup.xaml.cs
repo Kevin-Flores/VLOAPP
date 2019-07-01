@@ -30,6 +30,39 @@ namespace AppVLO
             De = DetalleRecibido;
         }
 
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            Tema.Text = De.Menu;
+            string result;
+            try
+            {
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(VarGlobal.Link)
+                };
+                string url = string.Format("api/TipoMenus/{0}",De.IdMenu);
+                var response = await client.GetAsync(url);
+                result = response.Content.ReadAsStringAsync().Result;
+
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Error", $"Problemas de conexión", "Ok");
+                return;
+            }
+
+            TipoMenu bebida = JsonConvert.DeserializeObject<TipoMenu>(result);
+
+            if(bebida.Nombre == "Bebidas" || bebida.Nombre == "Postres" || bebida.Nombre == "Sopas")
+            {
+                Termino.IsEnabled = false;
+                Termino.IsVisible = false;
+                lblCantidad.IsVisible = false;
+            }
+            Termino.SelectedItem = "Ninguno";
+        }
+
         private void Cancel_Clicked(object sender, EventArgs e)
         {
             PopupNavigation.Instance.PopAsync();
@@ -37,12 +70,23 @@ namespace AppVLO
 
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
+            if(Cantidad.Text == "" || Cantidad.Text == "0" || Cantidad.Text == null)
+            {
+                await DisplayAlert("Aviso", "Debe ingresar una cantidad valida!", "OK");
+                return;
+            }
             string coment;
             if(Comentario.Text == null)
             {
                 coment = "";
             }
             else { coment = Comentario.Text; }
+            string term;
+            if(Termino.SelectedItem == null)
+            {
+                term = "";
+            }
+            else { term = Convert.ToString(Termino.SelectedItem); }
 
             var pedido = new Model.Detalle
             {
@@ -52,7 +96,7 @@ namespace AppVLO
                 PrecioUnitario = Convert.ToString(((Model.Menu)BindingContext).Precio),
                 IdPedido = De.IdPedido,
                 cantidad = Convert.ToInt32(Cantidad.Text),
-                Termino = Convert.ToString(Termino.SelectedItem),
+                Termino = term,
                 Comentarios = coment,
                 Estado = 1
             };
@@ -86,8 +130,8 @@ namespace AppVLO
             string message = "Datos Guardados";
             if (Device.RuntimePlatform == Device.Android)
             {
-                
-                Android.Widget.Toast.MakeText(Android.App.Application.Context,message, Android.Widget.ToastLength.Short).Show();
+
+                Android.Widget.Toast.MakeText(Android.App.Application.Context, message, Android.Widget.ToastLength.Short).Show();
             }
             else if (Device.RuntimePlatform == Device.iOS)
             {

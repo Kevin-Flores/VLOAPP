@@ -18,5 +18,28 @@ namespace AppVLO.Model
         public int Estado { get; set; }
         public string Termino { get; set; }
         public string Comentarios { get; set; }
+
+        public string Canti
+        {
+            get { return $"Cantidad: {cantidad}"; }
+        }
+        public string Orden
+        {
+            get
+            {
+                if (Estado == 1)
+                {
+                    return "En Cocina";
+                }
+                else if(Estado == 2)
+                {
+                    return "Terminado";
+                }
+                else
+                {
+                    return "nada";
+                }
+            }
+        }
     }
 }
